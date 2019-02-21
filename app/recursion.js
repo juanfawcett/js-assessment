@@ -18,6 +18,29 @@ recursionAnswers = {
    */
   listFiles: function listFiles(data, dirName) {
 
+    var res = data.files;
+
+    if(data.subDirs.length == 0) return data.files;
+    if(dirName !== undefined){
+      if(dirName == data.dirName){
+        for(let i=0; i<data.subDirs.length; i++){
+          res = res.concat(listFiles(data.subDirs[i]));
+        }
+        return res;
+      }else{
+        if(data.subDirs.length == 0) return [];
+        for(let i=0; i<data.subDirs.length; i++){
+          res = listFiles(data.subDirs[i], dirName);
+          if(res) break;
+        }
+        return res;
+      }
+    }else{
+      for(let i=0; i<data.subDirs.length; i++){
+        res = res.concat(listFiles(data.subDirs[i]));
+      }
+      return res;
+    }
   },
 
   /**
@@ -30,6 +53,7 @@ recursionAnswers = {
    * @returns {Number} The nth fibonacci number
    */
   fibonacci: function fibonacci(n) {
-
+    if (n <= 2) return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
   },
 };
